@@ -14,12 +14,12 @@ public class ReviewController {
 
 	@Resource
 	ReviewRepository reviewRepo;
-	
+
 	@Resource
 	AlbumRepository albumRepo;
 
 	@RequestMapping("/review")
-	public String findOneReview(@RequestParam(value="id")long id, Model model) throws ReviewNotFoundException {
+	public String findOneReview(@RequestParam(value = "id") long id, Model model) throws ReviewNotFoundException {
 		Optional<Review> review = reviewRepo.findById(id);
 
 		if (review.isPresent()) {
@@ -29,14 +29,15 @@ public class ReviewController {
 		throw new ReviewNotFoundException();
 
 	}
+
 	@RequestMapping("/show-reviews")
 	public String findAllReviews(Model model) {
 		model.addAttribute("reviews", reviewRepo.findAll());
-		return("reviews");
+		return ("reviews");
 	}
-	
+
 	@RequestMapping("/album")
-	public String findOneAlbum(@RequestParam(value="id")long id, Model model) throws AlbumNotFoundException {
+	public String findOneAlbum(@RequestParam(value = "id") long id, Model model) throws AlbumNotFoundException {
 		Optional<Album> album = albumRepo.findById(id);
 
 		if (album.isPresent()) {
@@ -45,12 +46,12 @@ public class ReviewController {
 		}
 		throw new AlbumNotFoundException();
 	}
-	
+
 	@RequestMapping("/show-albums")
 	public String findAllAlbums(Model model) {
 		model.addAttribute("albums", albumRepo.findAll());
-		return("albums");
-		
+		return ("albums");
+
 	}
 
 }
