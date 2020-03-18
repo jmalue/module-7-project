@@ -84,8 +84,31 @@ public class ReviewControllerTest {
 		
 	}
 	
+	@Test
+	public void shouldAddAdditionalReviewsToModel() {
+		String albumName = "album name";
+		Album newAlbum = albumRepo.findByName(albumName);
+		String reviewName = "new review";
+		String reviewDescription = "new review description";
+		underTest.addReview(reviewName, reviewDescription, albumName);
+		Review newReview = new Review(reviewName, reviewDescription, newAlbum);
+		when(reviewRepo.save(newReview)).thenReturn(newReview);
+	}
+	
+	@Test
+	public void shouldRemoveReviewFromModelByName() {
+		String reviewName = review.getName();
+		when(reviewRepo.findByName(reviewName)).thenReturn(review);
+		underTest.deleteReviewByName(reviewName);
+		verify(reviewRepo).delete(review);
+		
 	
 	
+	
+	
+	
+	
+	}
 	
 	
 }	

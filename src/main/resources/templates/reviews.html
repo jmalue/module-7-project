@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <title>Beatles Album Reviews</title>
+  </head>
+  <body>
+        <h1>List of Beatles Albums Reviewed</h1>
+   <div th:each="review: ${reviews}">
+   <li>
+   <a th:href="@{/review(id=${review.id})}" th:text="${review.name}"></a>
+   </li>
+   </div>
+
+<form method=POST">
+	<div>
+		<label>Enter Review Name:</label>
+		<input type="text" name"reviewName"/>
+	</div>
+	
+	<div>
+		<label>Enter Review Description:</label>
+		<input type="text" name"reviewDescription"/>
+	</div>
+	
+	<div>
+		<label>Enter Album:</label>
+		<input type="text" name"albumName"/>
+	</div>
+	
+	<div>
+	<button th:formation="@{add-review}">Add Review</button>
+	</div>
+	
+</form>
+
+	<div>
+		<label>Enter Review Name:</label>
+		<input type="text" name"reviewName"/>
+	</div>
+
+	<div>
+	<button th:formation="@{delete-review}">Delete Review</button>
+	</div>
+	
+	
+	</form>
+
+
+
+    </main>
+
+<footer>
+<small>Copyright 2020</small>
+</footer>
+  
+  
+</body>
+</html>

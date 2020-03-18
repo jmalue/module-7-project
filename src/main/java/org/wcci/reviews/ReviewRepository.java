@@ -8,4 +8,5 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
 	Collection<Review> findByAlbumsContains(Album album);
 	Collection<Review> findByAlbumsId(Long id);
+	Review findByName(String reviewName);
 }

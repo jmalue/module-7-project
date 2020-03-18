@@ -54,5 +54,30 @@ public class ReviewController {
 		return ("albums");
 
 	}
+	@RequestMapping("/add-review")
+	public String addReview(String reviewName, String reviewDescription, String albumName) {
+		Album album = albumRepo.findByName(albumName);
+		Review newReview = reviewRepo.findByName(reviewName);
+		
+		if(newReview==null) {
+			newReview = new Review(reviewName, reviewDescription, album);
+			reviewRepo.save(newReview);
+		}
+		return "redirect:/show-reviews";
+		
+	}
+	@RequestMapping("delete-review")
+	public String deleteReviewByName(String reviewName) {
+		
+		if(reviewRepo.findByName(reviewName) != null);{
+		Review deletedReview = reviewRepo.findByName(reviewName);
+		reviewRepo.delete(deletedReview);
+	}
+		return "redirect:/show-reviews";
+		
+		
+		
+	}
+	
 
 }
