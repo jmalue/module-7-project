@@ -1,25 +1,22 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
-  <header>
-    <h1 th:text="${reviewModel.albumTitle}">A review</h1>
-  </header>
-
-  <body>
-    
-    <main>
-        <img th:src="${reviewsModel.imageUrl}"/>
-        
-        <p th:text="${reviewsModel.description}"></p>
-        <p th:text="${reviewsModel.releaseDate}"></p>
-                
-    </main>
-
-<footer>
-    <p><a href="/show-review">Review Homepage</a></p>
-<small>Copyright 2020</small>
-</footer>
-
+<head>
+	<title> A Review </title>
+</head>
+<body
+	<h1> A Single Review </h1>
+	
+	<div th:each = "review: ${reviews}">
+		<p th:text = "${review.name}"></p>
+		<p th:text = "${review.description}"></p>
+	
+	<form method = "POST">
+	<button type="submit" th:value="${review.id}" name="reviewId" th:formaction="@{del-reviews"> delete </button>
+	</form>
+	
+		<a href="http://localhost:8080/show-reviews">Back To Home</a>
+	</div>
+	
+	
 </body>
-
 </html>

@@ -20,6 +20,7 @@ public class ReviewControllerTest {
 	private ReviewController underTest;
 	@Mock
 	private Review review;
+	Long reviewId;
 
 	@Mock
 	private Review anotherReview;
@@ -50,7 +51,7 @@ public class ReviewControllerTest {
 		when(reviewRepo.findById(arbitraryReviewId)).thenReturn(Optional.of(review));
 
 		underTest.findOneReview(arbitraryReviewId, model);
-		verify(model).addAttribute("reviews", review);
+		verify(model).addAttribute("review", review);
 
 	}
 
@@ -102,16 +103,19 @@ public class ReviewControllerTest {
 		underTest.deleteReviewByName(reviewName);
 		verify(reviewRepo).delete(review);
 		
+	}
 	
-	
-	
-	
+	@Test
+	public void shouldRemoveReviewFromModelById() {
+		underTest.deleteReviewById(reviewId);
+		verify(reviewRepo).deleteById(reviewId);
+	}
 	
 	
 	}
 	
 	
-}	
+
 	
 	
 

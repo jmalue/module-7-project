@@ -78,6 +78,30 @@ public class ReviewController {
 		
 		
 	}
+	@RequestMapping("/del-review")
+	public String deleteReviewById(Long reviewId) {
+		
+		reviewRepo.deleteById(reviewId);
+		
+		return "redirect:/show-reviews";
+		
+	}
+	
+	@RequestMapping("/find-by-Album")
+	public String findReviewsByAlbum(String albumName, Model model) {
+		Album album = albumRepo.findByName(albumName);
+		model.addAttribute("reviews", reviewRepo.findByAlbumsContains(album));
+		
+		return "/album";
+		
+	
+	}
+	@RequestMapping("/sort-reviews")
+	public String sortReviews(Model model) {
+		model.addAttribute("reviews", reviewRepo.findAllByOrderByNameAsc());
+		
+		return "redirect:/show-reviews";
+	}
 	
 
 }

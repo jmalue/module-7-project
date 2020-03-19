@@ -33,19 +33,36 @@
 	</div>
 	
 </form>
-
+	
+	<form method="POST">
 	<div>
 		<label>Enter Review Name:</label>
 		<input type="text" name"reviewName"/>
 	</div>
 
 	<div>
-	<button th:formation="@{delete-review}">Delete Review</button>
+	<button th:formaction="@{delete-review}">Delete Review</button>
 	</div>
 	
+	</form>
+	
+	<form method="POST">
+	<div>
+		<label>Enter Album Name:</label>
+		<input type="text" name"AlbumName"/>
+	</div>
+
+	<div>
+	<button th:formaction="@{/find-by-album}">Find Reviews</button>
+	</div>
 	
 	</form>
-
+	
+	<form method="GET">
+	<div>
+	<button th:formaction="@{/sort-reviews}">Sort</button>
+	</div>
+</form>
 
 
     </main>

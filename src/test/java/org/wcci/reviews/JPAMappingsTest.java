@@ -1,6 +1,7 @@
 package org.wcci.reviews;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
@@ -142,5 +143,22 @@ public class JPAMappingsTest {
 		
 	}
 	
-
+	@Test
+	public void shouldSortReviews() {
+		Review ooLanguages = new Review("OO Languages", "description");
+		ooLanguages = reviewRepo.save(ooLanguages);
+		
+		Review scriptingLanguages = new Review("Scripting Languages", "description");
+		scriptingLanguages = reviewRepo.save(scriptingLanguages);
+		
+		entityManager.flush();
+		entityManager.clear();
+		
+		Collection<Review> sortedReviews = reviewRepo.findAllByOrderByNameAsc();
+		assertThat(sortedReviews, contains( ooLanguages, scriptingLanguages));
+		
+		
+		
+	
+	}
 }
