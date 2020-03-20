@@ -19,22 +19,22 @@ public class ReviewController {
 	@Resource
 	AlbumRepository albumRepo;
 
-	@RequestMapping("/review-template")
+	@RequestMapping("/review")
 	public String findOneReview(@PathVariable(value = "id") long id, Model model) throws ReviewNotFoundException {
 		Optional<Review> review = reviewRepo.findById(id);
 
 		if (review.isPresent()) {
 			model.addAttribute("review", review.get());
-			return "review-template";
+			return "review";
 		}
 		throw new ReviewNotFoundException();
 
 	}
 
-	@RequestMapping("/reviews-template")
+	@RequestMapping("/reviews")
 	public String findAllReviews(Model model) {
 		model.addAttribute("reviews", reviewRepo.findAll());
-		return ("reviews-template");
+		return ("reviews");
 	}
 
 	@RequestMapping("/album")
@@ -54,54 +54,64 @@ public class ReviewController {
 		return ("albums");
 
 	}
+
 	@RequestMapping("/add-review")
 	public String addReview(String reviewName, String reviewDescription, String albumName) {
+
 		Album album = albumRepo.findByName(albumName);
+		if (album == null) {
+			album = new Album(albumName);
+			albumRepo.save(album);
+		
+		}
+			
 		Review newReview = reviewRepo.findByName(reviewName);
 		
-		if(newReview==null) {
+
+		if (newReview == null) {
 			newReview = new Review(reviewName, reviewDescription, album);
 			reviewRepo.save(newReview);
 		}
 		return "redirect:/show-reviews";
-		
+
 	}
+
 	@RequestMapping("delete-review")
 	public String deleteReviewByName(String reviewName) {
-		
-		if(reviewRepo.findByName(reviewName) != null);{
-		Review deletedReview = reviewRepo.findByName(reviewName);
-		reviewRepo.delete(deletedReview);
-	}
+
+		if (reviewRepo.findByName(reviewName) != null)
+			;
+		{
+			Review deletedReview = reviewRepo.findByName(reviewName);
+			reviewRepo.delete(deletedReview);
+		}
 		return "redirect:/show-reviews";
-		
-		
-		
+
 	}
+
 	@RequestMapping("/del-review")
 	public String deleteReviewById(Long reviewId) {
-		
+
 		reviewRepo.deleteById(reviewId);
-		
+
 		return "redirect:/show-reviews";
-		
+
 	}
-	
+
 	@RequestMapping("/find-by-Album")
 	public String findReviewsByAlbum(String albumName, Model model) {
 		Album album = albumRepo.findByName(albumName);
 		model.addAttribute("reviews", reviewRepo.findByAlbumsContains(album));
-		
+
 		return "/album";
-		
-	
+
 	}
+
 	@RequestMapping("/sort-reviews")
 	public String sortReviews(Model model) {
 		model.addAttribute("reviews", reviewRepo.findAllByOrderByNameAsc());
-		
+
 		return "redirect:/show-reviews";
 	}
-	
 
 }
